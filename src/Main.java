@@ -2,7 +2,7 @@
 
 public class Main {
     private static A2Direction[] array;
-    private static A2Itinerary<A2Direction> it;
+    private static A2Itinerary<A2Direction> itinerary;
 
     public static void main(String[] args) {
 
@@ -31,15 +31,15 @@ public class Main {
         array[8] = A2Direction.RIGHT;
         array[9] = A2Direction.UP;
 
-        it = new MyItinerary(array);
+        itinerary = new MyItinerary(array);
 
-        ((MyItinerary) it).print();
-        int tmp = it.widthOfItinerary();
+        ((MyItinerary) itinerary).print();
+        int tmp = itinerary.widthOfItinerary();
         System.out.println("\nThe width of Iterary is " + tmp);
-        tmp = it.heightOfItinerary();
+        tmp = itinerary.heightOfItinerary();
         System.out.println("The height of Iterary is " + tmp);
         System.out.print("Right rotated direction is: ");
-        it.rotateRight();
+        itinerary.rotateRight();
 
 
         System.out.println("\n\nExercise 3 ------------------------------------");
