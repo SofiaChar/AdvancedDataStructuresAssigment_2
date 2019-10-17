@@ -2,6 +2,7 @@ import java.util.Arrays;
 
 public class MyMeasure implements A2Measure {
 
+
     @Override
     public boolean isSameCollection(int[] array1, int[] array2){
         int n = array1.length;

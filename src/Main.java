@@ -20,14 +20,17 @@ public class Main {
 
         System.out.println("Exercise 3 ------------------------------------");
 
-        MyMeasure measure = new MyMeasure();
-        int array1[] = { 3, 5, 2, 5, 2 };
-        int array2[] = { 2, 3, 5, 5, 2 };
+        A2Measure measure = new MyMeasure();
+
+        int array1[] = { 3, 2, 5, 2, 5, 77, 8 };
+        int array2[] = { 2, 3, 5, 5, 2, 8, 77 };
 
         if (measure.isSameCollection(array1, array2))
             System.out.println("Yes");
         else
             System.out.println("No");
+
+
 
 
         System.out.println("End of Exercise 3 ------------------------------------");
