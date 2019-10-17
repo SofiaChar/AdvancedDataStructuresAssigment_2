@@ -23,15 +23,17 @@ public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
 
     @Override
     public void insert(AnyType element) {
+
         int hash = element.hashCode();
         for(int i = 0; i < M; i++) {
             if(theTable[(hash + i * i) % M] == null) {
                 N++;
+                showTableInfo();
                 theTable[(hash + i * i) % M] = element;
                 cellsStatus[(hash + i * i) % M] = 1;
                 if((double)N / M > maxLoadFactor)
                     rehash();
-                showTableInfo();
+//                showTableInfo();
                 return;
             }
         }
@@ -42,7 +44,7 @@ public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
     }
 
     private void rehash() {
-        System.out.println("REASHING");
+        System.out.println("\n\nREHASHING");
         N = 0;
         M *= 2;
         M = nextPrime(M);
@@ -61,7 +63,7 @@ public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
             if(rehashedTable[i] != null)
                 this.insert(rehashedTable[i]);
         }
-        showTableInfo();
+//        showTableInfo();
     }
 
     private void showTableInfo(){
