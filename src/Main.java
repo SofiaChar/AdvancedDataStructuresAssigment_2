@@ -2,6 +2,7 @@
 
 public class Main {
     public static void main(String[] args) {
+
         System.out.println("Exercise 1 ------------------------------------");
         MyHashTable hashTable = new MyHashTable(0.5);
         hashTable.insert(1);
@@ -15,6 +16,14 @@ public class Main {
         System.out.println("End of Exercise 1 ------------------------------------");
 
         System.out.println("Exercise 2 ------------------------------------");
+
+        MyItinerary it = new MyItinerary();
+        it.addDirection('L');
+        it.addDirection('R');
+        it.addDirection('R');
+        it.addDirection('D');
+        it.addDirection('U');
+        it.print();
 
         System.out.println("End of Exercise 2 ------------------------------------");
 
@@ -34,6 +43,7 @@ public class Main {
 
 
         System.out.println("End of Exercise 3 ------------------------------------");
+
 
     }
 }
