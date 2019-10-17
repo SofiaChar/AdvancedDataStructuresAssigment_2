@@ -45,10 +45,10 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
         int leftX = 0;
         for(int i = 0; i < direction.length; i++) {
             if(direction[i] == A2Direction.LEFT) {
-                --xValue;
+                xValue--;
                 if(xValue < leftX) leftX = xValue;
             } if(direction[i] == A2Direction.RIGHT) {
-                ++xValue;
+                xValue++;
                 if(xValue > rightX) rightX = xValue;
             }
         }
@@ -62,10 +62,10 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
         int leftY = 0;
         for(int i = 0; i < direction.length; i++) {
             if(direction[i] == A2Direction.DOWN) {
-                --yValue;
+                yValue++;
                 if(yValue < leftY) leftY = yValue;
             } if(direction[i] == A2Direction.UP) {
-                ++yValue;
+                yValue--;
                 if(yValue > rightY) rightY = yValue;
             }
         }
