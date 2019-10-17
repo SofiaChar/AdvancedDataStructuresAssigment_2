@@ -18,7 +18,7 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
 
     void print()
     {
-        System.out.printf("{");
+        System.out.print("{");
         for(int i = 0; i < direction.length; ++i)
         {
             if(direction[i] == A2Direction.RIGHT)
