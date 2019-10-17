@@ -35,7 +35,26 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
 
     @Override
     public A2Direction[] rotateRight() {
-        return new A2Direction[0];
+        A2Direction[] rotatedDirection = new A2Direction[size];
+        for(int i = 0; i < rotatedDirection.length; i++) {
+            if(direction[i] == A2Direction.LEFT) {
+                rotatedDirection[i] = A2Direction.UP;
+                System.out.print("UP ");
+            }
+            if(direction[i] == A2Direction.RIGHT) {
+                rotatedDirection[i] = A2Direction.DOWN;
+                System.out.print("DOWN ");
+            }
+            if(direction[i] == A2Direction.UP){
+                rotatedDirection[i] = A2Direction.RIGHT;
+                System.out.print("RIGHT ");
+            }
+            if(direction[i] == A2Direction.DOWN){
+                rotatedDirection[i] = A2Direction.LEFT;
+                System.out.print("LEFT ");
+            }
+        }
+        return rotatedDirection;
     }
 
     @Override
@@ -47,7 +66,8 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
             if(direction[i] == A2Direction.LEFT) {
                 xValue--;
                 if(xValue < leftX) leftX = xValue;
-            } if(direction[i] == A2Direction.RIGHT) {
+            }
+            if(direction[i] == A2Direction.RIGHT) {
                 xValue++;
                 if(xValue > rightX) rightX = xValue;
             }
@@ -62,10 +82,11 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
         int leftY = 0;
         for(int i = 0; i < direction.length; i++) {
             if(direction[i] == A2Direction.DOWN) {
-                yValue++;
-                if(yValue < leftY) leftY = yValue;
-            } if(direction[i] == A2Direction.UP) {
                 yValue--;
+                if(yValue < leftY) leftY = yValue;
+            }
+            if(direction[i] == A2Direction.UP) {
+                yValue++;
                 if(yValue > rightY) rightY = yValue;
             }
         }
@@ -76,6 +97,5 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
     public int[] getIntersections() {
         return new int[0];
     }
-
 
 }

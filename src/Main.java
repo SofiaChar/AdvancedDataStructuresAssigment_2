@@ -29,10 +29,11 @@ public class Main {
         System.out.println("\nThe width of Iterary is " + tmp);
         tmp = it.heightOfItinerary();
         System.out.println("The height of Iterary is " + tmp);
+        System.out.print("Right rotated direction is: ");
+        it.rotateRight();
 
 
-
-        System.out.println("\nExercise 3 ------------------------------------");
+        System.out.println("\n\nExercise 3 ------------------------------------");
 
         MyMeasure measure = new MyMeasure();
         int array1[] = { 3, 5, 2, 5, 2 };
