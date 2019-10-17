@@ -16,9 +16,8 @@ public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
         M = 5;
         N = 0;
         cellsStatus = new int[M];
-        for(int i = 0; i < M; i++){
+        for(int i = 0; i < M; i++)
             cellsStatus[i] = 0;
-            System.out.println(cellsStatus[i]);}
     }
 
     @Override
