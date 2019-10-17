@@ -13,21 +13,26 @@ public class Main {
         hashTable.insert(12);
         hashTable.insert(13);
         hashTable.delete(12);
-        System.out.println("End of Exercise 1 ------------------------------------");
 
-        System.out.println("Exercise 2 ------------------------------------");
+
+        System.out.println("\n\nExercise 2 ------------------------------------");
 
         MyItinerary it = new MyItinerary();
         it.addDirection('L');
-        it.addDirection('R');
-        it.addDirection('R');
         it.addDirection('D');
+        it.addDirection('D');
+        it.addDirection('R');
         it.addDirection('U');
+        it.addDirection('L');
         it.print();
+        int tmp = it.widthOfItinerary();
+        System.out.println("\nThe width of Iterary is " + tmp);
+        tmp = it.heightOfItinerary();
+        System.out.println("The height of Iterary is " + tmp);
 
-        System.out.println("End of Exercise 2 ------------------------------------");
 
-        System.out.println("Exercise 3 ------------------------------------");
+
+        System.out.println("\nExercise 3 ------------------------------------");
 
         A2Measure measure = new MyMeasure();
 
