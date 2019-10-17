@@ -1,217 +1,130 @@
-public class MyHashTable<AnyType>{
+public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
 
     public double maxLoadFactor;
-    private static final int DEFAULT_TABLE_SIZE = 11;
-//    public MyHashTable (double loadFactor){
-//        maxLoadFactor = loadFactor;
-//    }
+    public int M; //size of the table
+    public int N; //number of elements in the table
+    public AnyType[] theTable;
+    public int[] cellsStatus; // 0 is empty; 1 is reserved; -1 is deleted
 
-    public MyHashTable()
-    {
-        this( DEFAULT_TABLE_SIZE );
-    }
-    public MyHashTable( int size )
-    {
-        allocateArray( size );
-        makeEmpty( );
-    }
-    public void insert(AnyType x )
-    {
-        System.out.println("Its insertEle and I inserted: "+ x);
-        // Insert x as active
-        int currentPos = findPos( x );
-        if( isActive( currentPos ) )
-            return;
-
-        array[ currentPos ] = new HashEntry<AnyType>( x, true );
-
-        // Rehash; see Section 5.5
-        if( ++currentSize > array.length / 2 )
-            rehash( );
+    public MyHashTable (double loadFactor){
+        maxLoadFactor = loadFactor;
+        setHashTable();
     }
 
-    /**
-     * Expand the hash table.
-     */
-    private void rehash( )
-    {
-        HashEntry<AnyType> [ ] oldArray = array;
-
-        // Create a new double-sized, empty table
-        allocateArray( nextPrime( 2 * oldArray.length ) );
-        currentSize = 0;
-
-        // Copy table over
-        for( int i = 0; i < oldArray.length; i++ )
-            if( oldArray[ i ] != null && oldArray[ i ].isActive )
-                insert( oldArray[ i ].element );
+    public void setHashTable(){
+        theTable = (AnyType[])new Object[5];
+        M = 5;
+        N = 0;
+        cellsStatus = new int[M];
+        for(int i = 0; i < M; i++){
+            cellsStatus[i] = 0;
+            System.out.println(cellsStatus[i]);}
     }
 
-    /**
-     * Method that performs quadratic probing resolution.
-     * Assumes table is at least half empty and table length is prime.
-     * @param x the item to search for.
-     * @return the position where the search terminates.
-     */
-    private int findPos( AnyType x )
-    {
-        int offset = 1;
-        int currentPos = myhash( x );
-
-        while( array[ currentPos ] != null &&
-                !array[ currentPos ].element.equals( x ) )
-        {
-            currentPos += offset;  // Compute ith probe
-            offset += 2;
-            if( currentPos >= array.length )
-                currentPos -= array.length;
+    @Override
+    public void insert(AnyType element) {
+        int hash = element.hashCode();
+        for(int i = 0; i < M; i++) {
+            if(theTable[(hash + i * i) % M] == null) {
+                N++;
+                theTable[(hash + i * i) % M] = element;
+                cellsStatus[(hash + i * i) % M] = 1;
+                if((double)N / M > maxLoadFactor)
+                    rehash();
+                showTableInfo();
+                return;
+            }
         }
 
-        return currentPos;
+        rehash();
+        insert(element);
+        return;
     }
 
-    /**
-     * Remove from the hash table.
-     * @param x the item to remove.
-     */
-    public void remove( AnyType x )
-    {
-        int currentPos = findPos( x );
-        if( isActive( currentPos ) )
-            array[ currentPos ].isActive = false;
-    }
+    private void rehash() {
+        System.out.println("REASHING");
+        N = 0;
+        M *= 2;
+        M = nextPrime(M);
+        AnyType[] rehashedTable = (AnyType[]) new Object[M];
+        AnyType[] tempTable = theTable;
+        theTable = rehashedTable;
+        rehashedTable = tempTable;
 
-    /**
-     * Find an item in the hash table.
-     * @param x the item to search for.
-     * @return the matching item.
-     */
-    public boolean contains( AnyType x )
-    {
-        int currentPos = findPos( x );
-        return isActive( currentPos );
-    }
+        cellsStatus = new int[M];
+        for(int i = 0; i < M; i++)
+            cellsStatus[i] = 0;
 
-    /**
-     * Return true if currentPos exists and is active.
-     * @param currentPos the result of a call to findPos.
-     * @return true if currentPos is active.
-     */
-    private boolean isActive( int currentPos )
-    {
-        return array[ currentPos ] != null && array[ currentPos ].isActive;
-    }
+        //WARNING REFACTOR THIS!!!!!!!-------------------------------
 
-    /**
-     * Make the hash table logically empty.
-     */
-    public void makeEmpty( )
-    {
-        currentSize = 0;
-        for( int i = 0; i < array.length; i++ )
-            array[ i ] = null;
-    }
-
-    private int myhash( AnyType x )
-    {
-        int hashVal = x.hashCode( );
-
-        hashVal %= array.length;
-        if( hashVal < 0 )
-            hashVal += array.length;
-
-        return hashVal;
-    }
-
-    private static class HashEntry<AnyType>
-    {
-        public AnyType  element;   // the element
-        public boolean isActive;  // false if marked deleted
-
-        public HashEntry( AnyType e )
-        {
-            this( e, true );
+        for(int i = 0; i < rehashedTable.length; i++) {
+            if(rehashedTable[i] != null)
+                this.insert(rehashedTable[i]);
         }
+        showTableInfo();
+    }
 
-        public HashEntry( AnyType e, boolean i )
-        {
-            element  = e;
-            isActive = i;
+    private void showTableInfo(){
+        System.out.println("\n\nThe length of the table is " + M);
+        System.out.println("The number of elements is " + N);
+        System.out.println("The load factor is " + (double)N/M);
+        System.out.print("Here are all of the elements ");
+        for(int i = 0; i < theTable.length; i++) {
+            if (cellsStatus[i] == 1)
+                System.out.print(" "+ theTable[i]);
         }
     }
 
-    private HashEntry<AnyType> [ ] array; // The array of elements
-    private int currentSize;              // The number of occupied cells
-
-    /**
-     * Internal method to allocate array.
-     * @param arraySize the size of the array.
-     */
-    @SuppressWarnings("unchecked")
-    private void allocateArray( int arraySize )
-    {
-        array = new HashEntry[ nextPrime( arraySize ) ];
+    @Override
+    public void delete(Object element) {
+        int hash = element.hashCode();
+        for(int i = 0; i < M; i++) {
+            if(theTable[(hash + i * i) % M].equals(element)) {
+                N--;
+                cellsStatus[(hash + i * i) % M] = -1;
+                theTable[(hash + i * i) % M] = null;
+                return;
+            }
+        }
     }
 
-    /**
-     * Internal method to find a prime number at least as large as n.
-     * @param n the starting number (must be positive).
-     * @return a prime number larger than or equal to n.
-     */
-    private static int nextPrime( int n )
-    {
-        if( n <= 0 )
+    private static int nextPrime(int n) {
+        if(n <= 0)
             n = 3;
-
-        if( n % 2 == 0 )
+        if(n % 2 == 0)
             n++;
-
-        for( ; !isPrime( n ); n += 2 )
+        for( ; !isPrime( n ); n += 2)
             ;
 
         return n;
     }
 
-    /**
-     * Internal method to test if a number is prime.
-     * Not an efficient algorithm.
-     * @param n the number to test.
-     * @return the result of the test.
-     */
-    private static boolean isPrime( int n )
-    {
-        if( n == 2 || n == 3 )
+    private static boolean isPrime(int n) {
+        if(n == 2 || n == 3)
             return true;
 
-        if( n == 1 || n % 2 == 0 )
+        if(n == 1 || n % 2 == 0)
             return false;
 
-        for( int i = 3; i * i <= n; i += 2 )
-            if( n % i == 0 )
+        for(int i = 3; i * i <= n; i += 2)
+            if(n % i == 0)
                 return false;
 
         return true;
     }
 
-//
-//    @Override
-//    public void insert(Object element) {
-//        insertEle((AnyType) element);
-//    }
-//
-//
-//    @Override
-//    public void delete(Object element) {
-//
-//    }
-//
-//    @Override
-//    public boolean contains(Object element) {
-//        return false;
-//    }
-//
-//    @Override
-//    public int getLengthOfArray() {
-//        return 0;
-//    }
+    @Override
+    public boolean contains(Object element) {
+        int hash = element.hashCode();
+        for(int i = 0; i < M; i++) {
+            if(theTable[(hash + i * i) % M].equals(element))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int getLengthOfArray() {
+        return M;
+    }
 }

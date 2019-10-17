@@ -14,7 +14,7 @@
 //
 //
 //    public void testInsertSimple() {
-//	A2HashTable<Integer> table = createTable();
+//	MyHashTable<Integer> table = createTable();
 //
 //	for(int i=0; i<NUM_INSERTIONS; i++) {
 //	    table.insert(i);

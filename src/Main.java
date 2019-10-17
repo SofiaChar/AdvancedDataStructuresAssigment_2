@@ -2,9 +2,15 @@
 
 public class Main {
     public static void main(String[] args) {
-        MyHashTable OuTr = new MyHashTable();
-        for (int i = 0; i < 1000; i++) {
-            OuTr.insert(i);
-        }
+        MyHashTable hashTable = new MyHashTable(0.5);
+        hashTable.insert(1);
+        hashTable.insert(3);
+        hashTable.insert(5);
+        hashTable.insert(6);
+        hashTable.insert(7);
+        hashTable.insert(12);
+        hashTable.insert(13);
+        hashTable.delete(12);
+
     }
 }
