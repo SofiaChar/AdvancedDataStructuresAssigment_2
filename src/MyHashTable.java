@@ -42,7 +42,7 @@ public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
     }
 
     private void rehash() {
-        System.out.println("REASHING");
+        System.out.println("\nREHASHING");
         N = 0;
         M *= 2;
         M = nextPrime(M);
