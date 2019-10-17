@@ -30,6 +30,7 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
             if(direction[i] == A2Direction.DOWN)
                 System.out.printf("DOWN,");
         }
+        System.out.printf("}");
     }
 
     @Override
@@ -39,12 +40,36 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
 
     @Override
     public int widthOfItinerary() {
-        return 0;
+        int xValue = 0;
+        int rightX = 0;
+        int leftX = 0;
+        for(int i = 0; i < direction.length; i++) {
+            if(direction[i] == A2Direction.LEFT) {
+                --xValue;
+                if(xValue < leftX) leftX = xValue;
+            } if(direction[i] == A2Direction.RIGHT) {
+                ++xValue;
+                if(xValue > rightX) rightX = xValue;
+            }
+        }
+        return rightX - leftX;
     }
 
     @Override
     public int heightOfItinerary() {
-        return 0;
+        int yValue = 0;
+        int rightY = 0;
+        int leftY = 0;
+        for(int i = 0; i < direction.length; i++) {
+            if(direction[i] == A2Direction.DOWN) {
+                --yValue;
+                if(yValue < leftY) leftY = yValue;
+            } if(direction[i] == A2Direction.UP) {
+                ++yValue;
+                if(yValue > rightY) rightY = yValue;
+            }
+        }
+        return rightY - leftY;
     }
 
     @Override
