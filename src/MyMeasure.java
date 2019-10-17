@@ -21,10 +21,10 @@ public class MyMeasure implements A2Measure {
         // If all elements were same.
         return true;
     }
-
+//
     @Override
     public int minDifferences(int[] array1, int[] array2){
-
+        return 0;
     }
 
    // public int[] getPercentileRange(int[] arr, int lower, int upper) {}
