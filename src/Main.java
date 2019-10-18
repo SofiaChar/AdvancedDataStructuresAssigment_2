@@ -1,6 +1,9 @@
 
 
 public class Main {
+    private static A2Direction[] array;
+    private static A2Itinerary<A2Direction> itinerary;
+
     public static void main(String[] args) {
 
         System.out.println("Exercise 1 ------------------------------------");
@@ -16,34 +19,45 @@ public class Main {
 
 
         System.out.println("\n\nExercise 2 ------------------------------------");
+        array = new A2Direction[10];
+        array[0] = A2Direction.LEFT;
+        array[1] = A2Direction.DOWN;
+        array[2] = A2Direction.RIGHT;
+        array[3] = A2Direction.DOWN;
+        array[4] = A2Direction.LEFT;
+        array[5] = A2Direction.UP;
+        array[6] = A2Direction.LEFT;
+        array[7] = A2Direction.UP;
+        array[8] = A2Direction.RIGHT;
+        array[9] = A2Direction.UP;
 
-        MyItinerary it = new MyItinerary();
-        it.addDirection('L');
-        it.addDirection('D');
-        it.addDirection('D');
-        it.addDirection('R');
-        it.addDirection('U');
-        it.addDirection('L');
-        it.print();
-        int tmp = it.widthOfItinerary();
+        itinerary = new MyItinerary(array);
+
+        ((MyItinerary) itinerary).outputDirection();
+
+        int tmp = itinerary.widthOfItinerary();
         System.out.println("\nThe width of Iterary is " + tmp);
-        tmp = it.heightOfItinerary();
+
+        tmp = itinerary.heightOfItinerary();
         System.out.println("The height of Iterary is " + tmp);
+
         System.out.print("Right rotated direction is: ");
-        it.rotateRight();
+        itinerary.rotateRight();
+        System.out.print("Get intersections: ");
+        itinerary.getIntersections();
 
 
         System.out.println("\n\nExercise 3 ------------------------------------");
 
-        A2Measure measure = new MyMeasure();
-
-        int array1[] = { 3, 2, 5, 2, 5, 77, 8 };
-        int array2[] = { 2, 3, 5, 5, 2, 8, 77 };
-
-        if (measure.isSameCollection(array1, array2))
-            System.out.println("Yes");
-        else
-            System.out.println("No");
+//        A2Measure measure = new MyMeasure();
+//
+//        int array1[] = { 3, 2, 5, 2, 5, 77, 8 };
+//        int array2[] = { 2, 3, 5, 5, 2, 8, 77 };
+//
+//        if (measure.isSameCollection(array1, array2))
+//            System.out.println("Yes");
+//        else
+//            System.out.println("No");
 
 
 

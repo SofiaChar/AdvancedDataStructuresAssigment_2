@@ -2,13 +2,13 @@
 public class MyMeasure implements A2Measure {
 
 
-    public static void selectionSort(int[] array){
+    public static void selectionSort(int[] array) {
 
         for (int i = 0; i < array.length; i++) {
             int min = array[i];
             int min_i = i;
 
-            for (int j = i+1; j < array.length; j++) {
+            for (int j = i + 1; j < array.length; j++) {
                 if (array[j] < min) {
                     min = array[j];
                     min_i = j;
@@ -23,7 +23,7 @@ public class MyMeasure implements A2Measure {
     }
 
     @Override
-    public boolean isSameCollection(int[] array1, int[] array2){
+    public boolean isSameCollection(int[] array1, int[] array2) {
         int N = array1.length;
         int M = array2.length;
 
@@ -42,24 +42,4 @@ public class MyMeasure implements A2Measure {
 
 
 
-        @Override
-    public int minDifferences(int[] array1, int[] array2){
-        int N = array1.length;
-        int M = array2.length;
-        int arrayStore [];
-
-        if (N == M)
-        {
-            selectionSort(array1);
-            selectionSort(array2);
-            for (int i = 0; i < N; i ++){
-            }
-        }
-        else{
-            System.out.println("The arrays are not the same size!");
-        }
-        return 0;
-    }
-
-   // public int[] getPercentileRange(int[] arr, int lower, int upper) {}
 }
