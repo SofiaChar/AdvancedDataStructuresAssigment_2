@@ -1,33 +1,23 @@
 public class MyItinerary implements A2Itinerary<A2Direction> {
 
-    A2Direction[] direction;
-    int size;
+    private A2Direction[] direction;
+    private int size;
 
     public MyItinerary(A2Direction[] inputDirections){
         direction = inputDirections;
         size = direction.length;
     }
 
-//    public void addDirection(char d){
-//        if (d == 'L') direction[size] = A2Direction.LEFT;
-//        if (d == 'R') direction[size] = A2Direction.RIGHT;
-//        if (d == 'U') direction[size] = A2Direction.UP;
-//        if (d == 'D') direction[size] = A2Direction.DOWN;
-//        size++;
-//    }
-
-    public void print()
-    {
-        for(int i = 0; i < size; ++i)
-        {
+    public void outputDirection() {
+        for(int i = 0; i < size; i++) {
             if(direction[i] == A2Direction.RIGHT)
-                System.out.printf("RIGHT ");
+                System.out.print("RIGHT ");
             if(direction[i] == A2Direction.LEFT)
-                System.out.printf("LEFT ");
+                System.out.print("LEFT ");
             if(direction[i] == A2Direction.UP)
-                System.out.printf("UP ");
+                System.out.print("UP ");
             if(direction[i] == A2Direction.DOWN)
-                System.out.printf("DOWN ");
+                System.out.print("DOWN ");
         }
     }
 
@@ -93,7 +83,74 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
 
     @Override
     public int[] getIntersections() {
-        return new int[0];
+        Coordinates current = new Coordinates();
+        current.xVal = 0;
+        current.yVal = 0;
+        int[] result = new int[size];
+        int count = 0;
+        MyHashTable<Coordinates> coords = new MyHashTable<>(0.75);
+        Coordinates smth = new Coordinates();
+        smth.xVal = 0;
+        smth.yVal = 0;
+        Coordinates[] path = new Coordinates[size];
+
+        for(int i = 0; i < size; i++) {
+            if (direction[i] == A2Direction.RIGHT)
+                current.xVal++;
+            if (direction[i] == A2Direction.LEFT)
+                current.xVal--;
+            if (direction[i] == A2Direction.UP)
+                current.yVal++;
+            if (direction[i] == A2Direction.DOWN)
+                current.yVal--;
+            Coordinates tmp = new Coordinates();
+            tmp.xVal = current.xVal;
+            tmp.yVal = current.yVal;
+            path[i] = tmp;
+        }
+
+        coords.insert(smth);
+        for(int i = 0; i < size; i++) {
+            if(coords.contains(path[i])) {
+                result[count] = i;
+                ++count;
+            }
+            else {
+                coords.insert(path[i]);
+            }
+        }
+
+        int[] finalans = new int[count];
+        for(int i = 0; i < count; ++i) {
+            System.out.print(result[i] + ",");
+            finalans[i] = result[i];
+        }
+        return finalans;
+    }
+
+    public class Coordinates {
+
+        public int xVal;
+        public int yVal;
+
+        //CHANGE THE FUNCTION!!!!!!!!!!!!!
+        @Override
+        public int hashCode() {
+            return Math.abs(15 * xVal * xVal + 13 * yVal);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(obj == null || !(obj instanceof Coordinates))
+                return false;
+
+            if(obj == this)
+                return true;
+
+            Coordinates tObj = (Coordinates) obj;
+
+            return this.xVal == tObj.xVal && this.yVal == tObj.yVal;
+        }
     }
 
 }

@@ -33,13 +33,18 @@ public class Main {
 
         itinerary = new MyItinerary(array);
 
-        ((MyItinerary) itinerary).print();
+        ((MyItinerary) itinerary).outputDirection();
+
         int tmp = itinerary.widthOfItinerary();
         System.out.println("\nThe width of Iterary is " + tmp);
+
         tmp = itinerary.heightOfItinerary();
         System.out.println("The height of Iterary is " + tmp);
+
         System.out.print("Right rotated direction is: ");
         itinerary.rotateRight();
+        System.out.print("Get intersections: ");
+        itinerary.getIntersections();
 
 
         System.out.println("\n\nExercise 3 ------------------------------------");
