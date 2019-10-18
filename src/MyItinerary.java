@@ -87,14 +87,13 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
         current.xVal = 0;
         current.yVal = 0;
 
-
         int[] result = new int[size];
 
         MyHashTable<Coordinates> coords = new MyHashTable<>(0.75);
-        Coordinates smth = new Coordinates();
+//        Coordinates smth = new Coordinates();
 
-        smth.xVal = 0;
-        smth.yVal = 0;
+//        smth.xVal = 0;
+//        smth.yVal = 0;
         Coordinates[] way = new Coordinates[size];
 
         for(int i = 0; i < size; i++) {
@@ -113,8 +112,8 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
         }
 
         int count = 0;
-        coords.insert(smth);
-        for(int i = 0; i < size; ++i) {
+//        coords.insert(smth);
+        for(int i = 0; i < size; i++) {
             if(coords.contains(way[i])) {
                 result[count] = i;
                 count++;
@@ -126,7 +125,7 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
 
         int[] finalans = new int[count];
         for(int i = 0; i < count; ++i) {
-            System.out.printf(result[i] + ",");
+            System.out.print(result[i] + " ");
             finalans[i] = result[i];
         }
 
