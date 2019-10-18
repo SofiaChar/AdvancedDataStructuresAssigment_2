@@ -141,7 +141,8 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
 
         @Override
         public int hashCode() {
-            return Math.abs(2 * xVal + yVal * yVal + 5);
+            int hashResult = Math.abs(2 * xVal + yVal * yVal + 5);
+            return hashResult;
         }
 
         @Override
