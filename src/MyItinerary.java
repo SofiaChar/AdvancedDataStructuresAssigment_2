@@ -138,10 +138,10 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
         public int xVal;
         public int yVal;
 
-        //CHANGE THE FUNCTION!!!!!!!!!!!!!
+
         @Override
         public int hashCode() {
-            return Math.abs(15 * xVal * xVal + 13 * yVal);
+            return Math.abs(2 * xVal + yVal * yVal + 5);
         }
 
         @Override
