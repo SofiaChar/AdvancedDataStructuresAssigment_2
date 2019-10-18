@@ -114,9 +114,8 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
                 result[count] = i;
                 count++;
             }
-            else {
+            else
                 coords.insert(way[i]);
-            }
         }
 
         int[] finalResult = new int[count];

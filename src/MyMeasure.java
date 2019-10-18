@@ -13,9 +13,9 @@ public class MyMeasure implements A2Measure {
             HeapSort obj = new HeapSort();
             obj.sort(array1);
             obj.sort(array2);
-            System.out.print("Sorted array1 ");
+            System.out.print("Sorted array1: ");
             obj.printArray(array1);
-            System.out.print("\nSorted array2 ");
+            System.out.print("Sorted array2: ");
             obj.printArray(array2);
 
             for (int i = 0; i < sizeOfArray1; i++)
@@ -23,6 +23,55 @@ public class MyMeasure implements A2Measure {
                     return false;
         }
         return true;
+    }
+
+    @Override
+    public int minDifferences(int[] array1, int[] array2) {
+        int sizeOfArray1 = array1.length;
+        int sizeOfArray2 = array2.length;
+
+        if (sizeOfArray1 != sizeOfArray2){
+            System.out.println("\nError minDifferences! Should be same size arrays");
+            return -1;
+        }
+        HeapSort obj = new HeapSort();
+        obj.sort(array1);
+        obj.sort(array2);
+
+        int squaredDiff = 0;
+        for (int i = 0; i < sizeOfArray1; i++)
+            squaredDiff += Math.pow((array2[i]-array1[i]), 2);
+
+        return squaredDiff;
+    }
+
+    @Override
+    public int[] getPercentileRange(int[] arr, int lower, int upper) {
+        int sizeOfArray = arr.length;
+
+        HeapSort obj = new HeapSort();
+
+        obj.sort(arr);
+        System.out.print("Sorted arr: ");
+        obj.printArray(arr);
+
+        int firstIndex =  (int) Math.ceil((lower * sizeOfArray)/100);
+//        System.out.println("FirstIndex " + firstIndex);
+
+        int lastIndex = (int) Math.floor((upper * sizeOfArray)/100);
+//        System.out.println("SecondIndex " + lastIndex);
+
+        int [] result = new int[lastIndex-firstIndex];
+        int count = 0;
+        for (int i = firstIndex; i < lastIndex; i++) {
+            result[count] = arr[i];
+            count++;
+        }
+
+//        for (int i = 0; i < result.length; i++)
+//            System.out.println("Result["+i+"]"+result[i]);
+
+        return result;
     }
 
     public class HeapSort {
@@ -72,7 +121,7 @@ public class MyMeasure implements A2Measure {
 
         void printArray(int array[]) {
             int size = array.length;
-            for (int i = 0; i < size; ++i)
+            for (int i = 0; i < size; i++)
                 System.out.print(array[i] + " ");
             System.out.println();
         }
