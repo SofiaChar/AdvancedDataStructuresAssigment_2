@@ -49,15 +49,15 @@ public class Main {
 
         System.out.println("\n\nExercise 3 ------------------------------------");
 
-//        A2Measure measure = new MyMeasure();
-//
-//        int array1[] = { 3, 2, 5, 2, 5, 77, 8 };
-//        int array2[] = { 2, 3, 5, 5, 2, 8, 77 };
-//
-//        if (measure.isSameCollection(array1, array2))
-//            System.out.println("Yes");
-//        else
-//            System.out.println("No");
+        A2Measure measure = new MyMeasure();
+
+        int array1[] = { 3, 2, 5, 2, 5, 77, 8 };
+        int array2[] = { 2, 3, 5, 5, 8, 77, 2 };
+
+        if (measure.isSameCollection(array1, array2))
+        System.out.println("Yes");
+        else
+            System.out.println("No");
 
 
 

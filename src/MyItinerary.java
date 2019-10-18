@@ -83,18 +83,15 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
 
     @Override
     public int[] getIntersections() {
-        Coordinates current = new Coordinates();
+        Points current = new Points();
         current.xVal = 0;
         current.yVal = 0;
 
         int[] result = new int[size];
 
-        MyHashTable<Coordinates> coords = new MyHashTable<>(0.75);
-//        Coordinates smth = new Coordinates();
+        MyHashTable<Points> coords = new MyHashTable<>(0.75);
 
-//        smth.xVal = 0;
-//        smth.yVal = 0;
-        Coordinates[] way = new Coordinates[size];
+        Points[] way = new Points[size];
 
         for(int i = 0; i < size; i++) {
             if (direction[i] == A2Direction.RIGHT)
@@ -105,14 +102,13 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
                 current.yVal++;
             if (direction[i] == A2Direction.DOWN)
                 current.yVal--;
-            Coordinates tmp = new Coordinates();
-            tmp.xVal = current.xVal;
-            tmp.yVal = current.yVal;
-            way[i] = tmp;
+            Points temp = new Points();
+            temp.xVal = current.xVal;
+            temp.yVal = current.yVal;
+            way[i] = temp;
         }
 
         int count = 0;
-//        coords.insert(smth);
         for(int i = 0; i < size; i++) {
             if(coords.contains(way[i])) {
                 result[count] = i;
@@ -123,21 +119,18 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
             }
         }
 
-        int[] finalans = new int[count];
+        int[] finalResult = new int[count];
         for(int i = 0; i < count; ++i) {
             System.out.print(result[i] + " ");
-            finalans[i] = result[i];
+            finalResult[i] = result[i];
         }
-
-        return finalans;
+        return finalResult;
     }
 
 
-    public class Coordinates {
-
+    public class Points {
         public int xVal;
         public int yVal;
-
 
         @Override
         public int hashCode() {
@@ -147,13 +140,13 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
 
         @Override
         public boolean equals(Object obj) {
-            if(obj == null || !(obj instanceof Coordinates))
+            if(obj == null || !(obj instanceof Points))
                 return false;
 
             if(obj == this)
                 return true;
 
-            Coordinates tObj = (Coordinates) obj;
+            Points tObj = (Points) obj;
 
             return this.xVal == tObj.xVal && this.yVal == tObj.yVal;
         }
