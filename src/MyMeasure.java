@@ -1,6 +1,5 @@
 public class MyMeasure implements A2Measure {
 
-
     @Override
     public boolean isSameCollection(int[] array1, int[] array2) {
         int sizeOfArray1 = array1.length;
@@ -55,10 +54,8 @@ public class MyMeasure implements A2Measure {
         obj.printArray(arr);
 
         int firstIndex =  (int) Math.floor((lower * sizeOfArray)/100);
-//        System.out.println("FirstIndex " + firstIndex);
 
         int lastIndex = (int) Math.ceil((upper * sizeOfArray)/100);
-//        System.out.println("SecondIndex " + lastIndex);
 
         int [] result = new int[lastIndex-firstIndex];
         int count = 0;
@@ -67,53 +64,42 @@ public class MyMeasure implements A2Measure {
             count++;
         }
 
-//        for (int i = 0; i < result.length; i++)
-//            System.out.println("Result["+i+"]"+result[i]);
-
         return result;
     }
 
     public class HeapSort {
 
         public void sort(int array[]) {
-            int N = array.length;
+            int size = array.length;
 
-            // Build heap (rearrange array)
-            for (int i = N / 2 - 1; i >= 0; i--)
-                heapify(array, N, i);
+            for (int i = size / 2 - 1; i >= 0; i--)
+                heapify(array, size, i);
 
-            // One by one extract an element from heap
-            for (int i = N - 1; i >= 0; i--) {
-                // Move current root to end
+            for (int i = size - 1; i >= 0; i--) {
                 int temp = array[0];
                 array[0] = array[i];
                 array[i] = temp;
 
-                // call max heapify on the reduced heap
                 heapify(array, i, 0);
             }
         }
 
         void heapify(int array[], int size, int root) {
-            int theBiggest = root; // Initialize largest as root
-            int left = 2 * root + 1; // left = 2*root + 1
-            int right = 2 * root + 2; // right = 2*root + 2
+            int theBiggest = root;
+            int left = 2 * root + 1;
+            int right = 2 * root + 2;
 
-            // If left child is larger than root
             if (left < size && array[left] > array[theBiggest])
                 theBiggest = left;
 
-            // If right child is larger than largest so far
             if (right < size && array[right] > array[theBiggest])
                 theBiggest = right;
 
-            // If largest is not a root
             if (theBiggest != root) {
                 int swap = array[root];
                 array[root] = array[theBiggest];
                 array[theBiggest] = swap;
 
-                // Recursively heapify the affected sub-tree
                 heapify(array, size, theBiggest);
             }
         }
