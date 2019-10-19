@@ -1,8 +1,8 @@
 public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
 
     public double maxLoadFactor;
-    public int m; //size of the table
-    public int n; //number of elements in the table
+    public int tableLength; //size of the table
+    public int numberOfElements; //number of elements in the table
     public AnyType[] hashTable;
     public int[] cellsStatus; // 0 is empty; 1 is reserved; -1 is deleted
 
@@ -13,40 +13,38 @@ public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
 
     public void setHashTable(){
         hashTable = (AnyType[])new Object[10];
-        m = 10;
-        n = 0;
-        cellsStatus = new int[m];
-        for(int i = 0; i < m; i++)
+        tableLength = 10;
+        numberOfElements = 0;
+        cellsStatus = new int[tableLength];
+        for(int i = 0; i < tableLength; i++)
             cellsStatus[i] = 0;
     }
 
     private void rehash() {
-
-        System.out.println("\nREHASHING");
-        n = 0;
-        m *= 2;
-        m = nextPrime(m);
-        AnyType[] rehashedTable = (AnyType[]) new Object[m];
+        System.out.print("\n\nREHASHING");
+        numberOfElements = 0;
+        tableLength *= 2;
+        tableLength = nextPrime(tableLength);
+        AnyType[] rehashedTable = (AnyType[]) new Object[tableLength];
         AnyType[] tempTable = hashTable;
         hashTable = rehashedTable;
         rehashedTable = tempTable;
 
-        cellsStatus = new int[m];
+        cellsStatus = new int[tableLength];
 
-        for(int i = 0; i < m; i++)
+        for(int i = 0; i < tableLength; i++)
             cellsStatus[i] = 0;
 
         for(int i = 0; i < rehashedTable.length; i++) {
             if(rehashedTable[i] != null)
                 this.insert(rehashedTable[i]);
         }
-//        showTableInfo();
     }
 
-    private void showTableInfo(){
-        System.out.println("\n\nThe length of the table is " + m);
-        System.out.println("The number of elements is " + n);
-        System.out.println("The load factor is " + (double) n / m);
+    public void showTableInfo(){
+        System.out.println("\n\nThe length of the table is " + tableLength);
+        System.out.println("The number of elements is " + numberOfElements);
+        System.out.println("The load factor is " + (double) numberOfElements / tableLength);
         System.out.print("Here are all of the elements ");
         for(int i = 0; i < hashTable.length; i++) {
             if (cellsStatus[i] == 1)
@@ -79,16 +77,15 @@ public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
 
     @Override
     public void insert(AnyType element) {
-        int hash = element.hashCode();
-        for(int i = 0; i < m; i++) {
-            if(hashTable[(hash + i * i) % m] == null) {
-                n++;
-                showTableInfo();
-                hashTable[(hash + i * i) % m] = element;
-                cellsStatus[(hash + i * i) % m] = 1;
-                if((double) n / m > maxLoadFactor)
-                    rehash();
+        int hashCode = element.hashCode();
+        for(int i = 0; i < tableLength; i++) {
+            if(hashTable[(hashCode + i * i) % tableLength] == null) {
+                numberOfElements++;
 //                showTableInfo();
+                hashTable[(hashCode + i * i) % tableLength] = element;
+                cellsStatus[(hashCode + i * i) % tableLength] = 1;
+                if((double) numberOfElements / tableLength > maxLoadFactor)
+                    rehash();
                 return;
             }
         }
@@ -99,12 +96,12 @@ public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
 
     @Override
     public void delete(Object element) {
-        int hash = element.hashCode();
-        for(int i = 0; i < m; i++) {
-            if(hashTable[(hash + i * i) % m].equals(element)) {
-                n--;
-                cellsStatus[(hash + i * i) % m] = -1;
-                hashTable[(hash + i * i) % m] = null;
+        int hashCode = element.hashCode();
+        for(int i = 0; i < tableLength; i++) {
+            if(hashTable[(hashCode + i * i) % tableLength].equals(element)) {
+                numberOfElements--;
+                cellsStatus[(hashCode + i * i) % tableLength] = -1;
+                hashTable[(hashCode + i * i) % tableLength] = null;
                 return;
             }
         }
@@ -112,9 +109,11 @@ public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
 
     @Override
     public boolean contains(Object element) {
-        int hash = element.hashCode();
-        for(int i = 0; i < m; i++) {
-            if(hashTable[(hash + i * i) % m].equals(element))
+        int hashCode = element.hashCode();
+        for(int i = 0; i < tableLength; i++) {
+            if(cellsStatus[(hashCode + i * i) % tableLength] == 0)
+                return false;
+            if(hashTable[(hashCode + i * i) % tableLength].equals(element))
                 return true;
         }
         return false;
@@ -122,131 +121,6 @@ public class MyHashTable<AnyType> implements A2HashTable <AnyType>{
 
     @Override
     public int getLengthOfArray() {
-        return m;
+        return tableLength;
     }
 }
-
-
-//import java.lang.reflect.Array;
-//
-//public class MyHashTable <AnyType> implements A2HashTable <AnyType> {
-//
-//    public MyHashTable(Double mLambda)
-//    {
-//        table = (AnyType[])new Object[5];
-//        lambda = mLambda;
-//        size = 5;
-//        elementCount = 0;
-//        info = new char[size];
-//        for(int i = 0; i < size; ++i)
-//            info[i] = 'e';
-//    }
-//
-//    @Override
-//    public void insert(AnyType element) {
-//        ++elementCount;
-//        int hash = element.hashCode();
-//        for(int i = 0; i < size; ++i)
-//        {
-//            if(table[(hash + i * i) % size] == null)
-//            {
-//                table[(hash + i * i) % size] = element;
-//                info[(hash + i * i) % size] = 'b';
-//                if(lambda * size < (double)elementCount)
-//                {
-//                    rehash();
-//                }
-//                return;
-//            }
-//        }
-//
-//        rehash();
-//        insert(element);
-//    }
-//
-//    @Override
-//    public boolean contains(AnyType element) {
-//        int hash = element.hashCode();
-//        for(int i = 0; i < size; ++i)
-//        {
-//            if(info[(hash + i * i) % size] == 'e')
-//                return false;
-//
-//            if(table[(hash + i * i) % size].equals(element))
-//                return true;
-//        }
-//
-//        return false;
-//    }
-//
-//    @Override
-//    public void delete(AnyType element) {
-//        int hash = element.hashCode();
-//        for(int i = 0; i < size; ++i)
-//        {
-//            if(table[(hash + i * i) % size].equals(element))
-//            {
-//                info[(hash + i * i) % size] = 'd';
-//                table[(hash + i * i) % size] = null;
-//                return;
-//            }
-//        }
-//        System.out.println("Error deleting a non existing element");
-//    }
-//
-//    @Override
-//    public int getLengthOfArray() {
-//        return size;
-//    }
-//
-//    private boolean isPrime(int n)
-//    {
-//        for(int i = 2; i * i <= n; ++i)
-//        {
-//            if(n % i == 0)
-//                return false;
-//        }
-//        return true;
-//    }
-//
-//    private int getNextPrime(int n)
-//    {
-//        for(int i = n; ; i += 2)
-//        {
-//            if(isPrime(i)) {
-//                return i;
-//            }
-//        }
-//    }
-//
-//    private void rehash()
-//    {
-//        elementCount = 0;
-//        size *= 2;
-//        ++size;
-//        size = getNextPrime(size);
-//        AnyType[] newTable = (AnyType[]) new Object[size];
-//        info = new char[size];
-//        for(int i = 0; i < size; ++i)
-//        {
-//            info[i] = 'e';
-//        }
-//        AnyType[] tmp = table;
-//        table = newTable;
-//        newTable = tmp;
-//
-//        for(int i = 0; i < newTable.length; ++i)
-//        {
-//            if(newTable[i] != null)
-//                this.insert(newTable[i]);
-//        }
-//
-//    }
-//
-//    private double lambda;
-//    private AnyType[] table;
-//    private int size;
-//    private int elementCount;
-//    private char[] info;
-//
-//}

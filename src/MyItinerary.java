@@ -117,7 +117,7 @@ public class MyItinerary implements A2Itinerary<A2Direction> {
             else
                 coords.insert(way[i]);
         }
-
+        System.out.print("\n\n*Result of getIntersections(): ");
         int[] finalResult = new int[count];
         for(int i = 0; i < count; ++i) {
             System.out.print(result[i] + " ");
