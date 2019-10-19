@@ -1,4 +1,3 @@
-
 public class MyMeasure implements A2Measure {
 
 
@@ -55,10 +54,10 @@ public class MyMeasure implements A2Measure {
         System.out.print("Sorted arr: ");
         obj.printArray(arr);
 
-        int firstIndex =  (int) Math.ceil((lower * sizeOfArray)/100);
+        int firstIndex =  (int) Math.floor((lower * sizeOfArray)/100);
 //        System.out.println("FirstIndex " + firstIndex);
 
-        int lastIndex = (int) Math.floor((upper * sizeOfArray)/100);
+        int lastIndex = (int) Math.ceil((upper * sizeOfArray)/100);
 //        System.out.println("SecondIndex " + lastIndex);
 
         int [] result = new int[lastIndex-firstIndex];

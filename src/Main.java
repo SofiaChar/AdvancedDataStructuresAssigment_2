@@ -73,7 +73,7 @@ public class Main {
 
         System.out.println("*The squared sum of the differences is " + measure.minDifferences(array1,array2));
 
-        int temp[] = measure.getPercentileRange(arr, 0, 25);
+        int temp[] = measure.getPercentileRange(arr, 0, 55);
         System.out.print("*The Percentile Range is ");
         for (int i=0; i< temp.length; i++)
             System.out.print(temp[i] + " ");
